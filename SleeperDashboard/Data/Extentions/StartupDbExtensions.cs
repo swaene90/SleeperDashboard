@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace SleeperDashboard.Data.Extentions
@@ -16,6 +17,10 @@ namespace SleeperDashboard.Data.Extentions
 
             try
             {
+                _logger.LogInformation("Attempting to connect to database...");
+                await context.Database.OpenConnectionAsync();
+                _logger.LogInformation("Database connection successful!");
+
                 var databaseCreate = context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
 
                 if (databaseCreate != null)

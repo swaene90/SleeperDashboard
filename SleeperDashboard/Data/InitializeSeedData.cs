@@ -1,4 +1,4 @@
-﻿using SleeperDashboard.Data.Entity.Player;
+﻿using SleeperDashboard.Data.Entity;
 
 namespace SleeperDashboard.Data
 {
@@ -20,7 +20,7 @@ namespace SleeperDashboard.Data
                     DepthChartPosition = 1,
                     Status = "Active",
                     Sport = "nfl",
-                    FantasyPositions = new List<FantasyPosition> { new FantasyPosition { Position = "QB" } },
+                    FantasyPositions = new List<FantasyPosition> { new() { Position = "QB" } },
                     Number = 12,
                     SearchLastName = "brady",
                     InjuryStartDate = null,

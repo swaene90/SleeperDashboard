@@ -1,38 +1,43 @@
 services:
   mysql:
-    image: mysql:8.3.0
+    image: mysql:8.0
     container_name: SleeperDbContainer
+    restart: always
     networks:
       - sleeper
     environment:
       MYSQL_ROOT_PASSWORD: L0caldev
       MYSQL_DATABASE: SleeperDb
     ports:
-      - "8003:3306"
+      - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
 
   sleeperdashboard:
     container_name: SleeperDashboardContainer
     image: ${DOCKER_REGISTRY-}sleeperdashboard
-    volumes:
-      - ${HOME}/.aspnet/https:/root/.aspnet/https:ro
-      - ${HOME}/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     build:
       context: .
       dockerfile: SleeperDashboard/Dockerfile
     ports:
-      - "8002:80"
+        - "8002:8080"  # Map container's 8080 to localhost 8002
+        - "8003:8081"  # Map container's 8081 to localhost 8003 (for HTTPS)
     networks:
         - sleeper
     depends_on:
         - mysql
     environment:
-        ConnectionStrings__SleeperDb: "Server=mysql;Database=SleeperDb;Uid=root;Pwd=L0caldev;"
+        # ASPNETCORE_URLS: "http://+:80" # Forces the app to use the correct URL
+        ASPNETCORE_ENVIRONMENT: Development
+        #ASPNETCORE_URLS: "http://+:8080;https://+:8081"
+        ConnectionStrings__SleeperDb: "Server=mysql;Database=SleeperDb;User=root;Password=L0caldev;"
+    command: ["dotnet", "SleeperDashboard.dll"]
+
 
 volumes:
     mysql:
       
 networks:
     sleeper:
+       driver: bridge
       

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace SleeperDashboard.Data.Entity.Player
+namespace SleeperDashboard.Data.Entity
 {
     [PrimaryKey(nameof(Id))]
     public class Player

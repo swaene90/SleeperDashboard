@@ -8,7 +8,7 @@ namespace SleeperDashboard.Data
         {
         }
 
-        public DbSet<Entity.Player.Player> Players { get; set; }
-        public DbSet<Entity.Player.FantasyPosition> FantasyPosition { get; set; }
+        public DbSet<Entity.Player> Players { get; set; }
+        public DbSet<Entity.FantasyPosition> FantasyPosition { get; set; }
     }
 }
