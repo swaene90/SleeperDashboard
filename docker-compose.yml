@@ -15,6 +15,9 @@ services:
   sleeperdashboard:
     container_name: SleeperDashboardContainer
     image: ${DOCKER_REGISTRY-}sleeperdashboard
+    volumes:
+      - ${HOME}/.aspnet/https:/root/.aspnet/https:ro
+      - ${HOME}/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     build:
       context: .
       dockerfile: SleeperDashboard/Dockerfile
@@ -29,3 +32,7 @@ services:
 
 volumes:
     mysql:
+      
+networks:
+    sleeper:
+      

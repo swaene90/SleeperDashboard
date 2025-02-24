@@ -20,7 +20,7 @@ namespace SleeperDashboard.Data
                     DepthChartPosition = 1,
                     Status = "Active",
                     Sport = "nfl",
-                    FantasyPositions = new List<string> { "QB" },
+                    FantasyPositions = new List<FantasyPosition> { new FantasyPosition { Position = "QB" } },
                     Number = 12,
                     SearchLastName = "brady",
                     InjuryStartDate = null,
