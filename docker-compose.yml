@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: SleeperDbContainer
+    networks:
+      - sleeper
+    environment:
+      MYSQL_ROOT_PASSWORD: L0caldev
+      MYSQL_DATABASE: SleeperDb
+    ports:
+      - "8003:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+
+  sleeperdashboard:
+    container_name: SleeperDashboardContainer
+    image: ${DOCKER_REGISTRY-}sleeperdashboard
+    build:
+      context: .
+      dockerfile: SleeperDashboard/Dockerfile
+    ports:
+      - "8002:80"
+    networks:
+        - sleeper
+    depends_on:
+        - mysql
+    environment:
+        ConnectionStrings__SleeperDb: "Server=mysql;Database=SleeperDb;Uid=root;Pwd=L0caldev;"
+
+volumes:
+    mysql:
