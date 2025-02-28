@@ -32,8 +32,7 @@ services:
         #ASPNETCORE_URLS: "http://+:8080;https://+:8081"
         ConnectionStrings__SleeperDb: "Server=mysql;Database=SleeperDb;User=root;Password=L0caldev;"
     command: ["dotnet", "SleeperDashboard.dll"]
-
-
+    
 volumes:
     mysql:
       
