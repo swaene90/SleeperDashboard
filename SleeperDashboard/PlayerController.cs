@@ -40,55 +40,55 @@ public class PlayerController(ILogger<PlayerController> logger, IMediator mediat
     {
         var client = new HttpClient();
         var request = new HttpRequestMessage();
-        request.RequestUri = new Uri($"https://api.sleeper.app/v1/players/nfl/6462");
+        request.RequestUri = new Uri($"https://api.sleeper.app/v1/players/nfl/");
         request.Method = HttpMethod.Get;
         request.Headers.Add("Accept", "*/*");
-        request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
         var response = await client.SendAsync(request);
         var result = await response.Content.ReadAsStringAsync();
-        var players = JsonSerializer.Deserialize<IEnumerable<Player>>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var playersDict = JsonSerializer.Deserialize<Dictionary<string, Player>>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        foreach (var player in players)
+        foreach (var player in playersDict)
         {
             var playerEntity = new Data.Entity.Player()
             {
-                Id = player.Id,
-                Hashtag = player.Details.Hashtag,
-                DepthChartPosition = player.Details.DepthChartPosition,
-                Status = player.Details.Status,
-                Sport = player.Details.Sport,
-                Number = player.Details.Number,
-                SearchLastName = player.Details.SearchLastName,
-                InjuryStartDate = player.Details.InjuryStartDate as DateTime?,
-                Weight = player.Details.Weight,
-                Position = player.Details.Position,
-                PracticeParticipation = player.Details.PracticeParticipation as bool?,
-                SportradarId = player.Details.SportradarId,
-                Team = player.Details.Team,
-                LastName = player.Details.LastName,
-                College = player.Details.College,
-                FantasyDataId = player.Details.FantasyDataId,
-                InjuryStatus = player.Details.InjuryStatus as string,
-                PlayerId = player.Details.PlayerId,
-                Height = player.Details.Height,
-                SearchFullName = player.Details.SearchFullName,
-                Age = player.Details.Age,
-                StatsId = player.Details.StatsId,
-                BirthCountry = player.Details.BirthCountry,
-                EspnId = player.Details.EspnId,
-                SearchRank = player.Details.SearchRank,
-                FirstName = player.Details.FirstName,
-                DepthChartOrder = player.Details.DepthChartOrder,
-                YearsExp = player.Details.YearsExp,
-                RotowireId = player.Details.RotowireId as string,
-                RotoworldId = player.Details.RotoworldId,
-                SearchFirstName = player.Details.SearchFirstName,
-                YahooId = player.Details.YahooId as string
+                Id = int.Parse(player.Key),
+                Hashtag = player.Value.Hashtag,
+                DepthChartPosition = player.Value.DepthChartPosition,
+                Status = player.Value.Status,
+                Sport = player.Value.Sport,
+                Number = player.Value.Number ?? 0,
+                SearchLastName = player.Value.SearchLastName,
+                InjuryStartDate = player.Value.InjuryStartDate as DateTime?,
+                Weight = player.Value.Weight,
+                Position = player.Value.Position,
+                PracticeParticipation = player.Value.PracticeParticipation as bool?,
+                SportradarId = player.Value.SportradarId,
+                Team = player.Value.Team,
+                LastName = player.Value.LastName,
+                College = player.Value.College,
+                FantasyDataId = player.Value.FantasyDataId,
+                InjuryStatus = player.Value.InjuryStatus as string,
+                PlayerId = player.Value.PlayerId,
+                Height = player.Value.Height,
+                SearchFullName = player.Value.SearchFullName,
+                Age = player.Value.Age ?? 0,
+                StatsId = player.Value.StatsId,
+                BirthCountry = player.Value.BirthCountry,
+                EspnId = player.Value.EspnId,
+                SearchRank = player.Value.SearchRank,
+                FirstName = player.Value.FirstName,
+                DepthChartOrder = player.Value.DepthChartOrder,
+                YearsExp = player.Value.YearsExp,
+                RotowireId = player.Value.RotowireId as string,
+                RotoworldId = player.Value.RotoworldId,
+                SearchFirstName = player.Value.SearchFirstName,
+                YahooId = player.Value.YahooId as string
             };
 
             _context.Players.Add(playerEntity);
         }
 
-        return Ok(players);
+        await _context.SaveChangesAsync();
+        return Ok(playersDict);
     }
 }
