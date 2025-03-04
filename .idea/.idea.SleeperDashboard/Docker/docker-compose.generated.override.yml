@@ -18,25 +18,22 @@ services:
     - "--roslyn-worker-port=57400"
     - "--timeout=60"
     environment:
-      ASPNETCORE_URLS: "https://+:443;http://+:80"
       ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net9.0/SleeperDashboard.staticwebassets.runtime.CT.json"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
       RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "sleeperdashboard:dev"
     ports:
-    - "127.0.0.1:57012:57000"
-    - "127.0.0.1:57212:57200"
-    - "127.0.0.1:57412:57400"
+    - "127.0.0.1:57004:57000"
+    - "127.0.0.1:57204:57200"
+    - "127.0.0.1:57404:57400"
     volumes:
     - "C:\\Users\\swaen\\RiderProjects\\SleeperDashboard\\SleeperDashboard:/app:rw"
     - "C:\\Users\\swaen\\RiderProjects\\SleeperDashboard:/src:rw"
-    - "C:\\Users\\swaen\\AppData\\Roaming\\Microsoft\\UserSecrets:/root/.microsoft/usersecrets"
-    - "C:\\Users\\swaen\\AppData\\Roaming\\ASP.NET\\Https:/root/.aspnet/https"
     - "C:\\Users\\swaen\\.nuget\\packages:/root/.nuget/packages"
     - "C:\\Users\\swaen\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.3\\\
       Linux64:/opt/JetBrains/RiderDebuggerTools"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.7\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     - "C:\\Users\\swaen\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2025_2_27_20_16_45:/var/opt/JetBrains/RiderDebuggerTools:rw"
+      JetBrains.Debugger.Worker.2025_3_04_05_52_36:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
