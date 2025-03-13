@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using MySql.EntityFrameworkCore.Extensions;
 using SleeperDashboard.Data;
 using SleeperDashboard.Data.Extentions;
+using SleeperDashboard.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,6 @@ app.MapRazorComponents<App>()
 
 app.MapControllers();
 
-await app.CreateIfNotExists();
+await RetryHelper.Retry(app.CreateIfNotExists, 10);
 
 app.Run();

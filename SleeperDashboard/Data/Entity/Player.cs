@@ -8,8 +8,9 @@ namespace SleeperDashboard.Data.Entity
     [PrimaryKey(nameof(Id))]
     public class Player
     {
-        public int Id { get; set; }
-        
+        [Key]
+        public string Id { get; set; } = null!;
+
         [MaxLength(255)]
         public string? Hashtag { get; set; }
         public int DepthChartPosition { get; set; }

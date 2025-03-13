@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using SleeperDashboard.Helper;
 
 namespace SleeperDashboard.Data.Extentions
 {
@@ -38,7 +39,7 @@ namespace SleeperDashboard.Data.Extentions
 
                     }
 
-                    await InitializeSeedData.Initialize(context);
+                    //await InitializeSeedData.Initialize(context);
                     _logger.LogInformation("Database seeded for: {name}", nameof(SleeperDbContext));
                 }
             }

@@ -1,14 +1,18 @@
 ﻿using System.Text.Json;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SleeperDashboard.Data;
 using SleeperDashboard.Dto.Player;
 
-namespace SleeperDashboard;
+namespace SleeperDashboard.Controller;
 
 [ApiController]
 [Route("[controller]")]
-public class PlayerController(ILogger<PlayerController> logger, IMediator mediator, SleeperDbContext context) : ControllerBase
+public class PlayerController(
+    ILogger<PlayerController> logger,
+    IMediator mediator,
+    SleeperDbContext context) : ControllerBase
 {
     private readonly ILogger<PlayerController> _logger = logger;
     private readonly IMediator _mediator = mediator;
@@ -47,11 +51,13 @@ public class PlayerController(ILogger<PlayerController> logger, IMediator mediat
         var result = await response.Content.ReadAsStringAsync();
         var playersDict = JsonSerializer.Deserialize<Dictionary<string, Player>>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+        var existingPlayersIds = await _context.Players.Select(p => p.Id.ToString()).ToListAsync();
+
         foreach (var player in playersDict)
         {
             var playerEntity = new Data.Entity.Player()
             {
-                Id = int.Parse(player.Key),
+                Id = player.Key,
                 Hashtag = player.Value.Hashtag,
                 DepthChartPosition = player.Value.DepthChartPosition,
                 Status = player.Value.Status,
@@ -85,7 +91,14 @@ public class PlayerController(ILogger<PlayerController> logger, IMediator mediat
                 YahooId = player.Value.YahooId as string
             };
 
-            _context.Players.Add(playerEntity);
+            if (existingPlayersIds.Contains(player.Key))
+            {
+                _context.Players.Update(playerEntity);
+            }
+            else
+            {
+                _context.Players.Add(playerEntity);
+            }
         }
 
         await _context.SaveChangesAsync();
