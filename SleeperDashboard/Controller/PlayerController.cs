@@ -102,6 +102,6 @@ public class PlayerController(
         }
 
         await _context.SaveChangesAsync();
-        return Ok(playersDict);
+        return Ok();
     }
 }
