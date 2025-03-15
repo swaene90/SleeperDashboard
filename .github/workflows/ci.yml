@@ -22,7 +22,7 @@ jobs:
           dotnet-version: '9.0'
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore SleeperDashboard.sln
 
       - name: Build Project
         run: dotnet build SleeperDashboard.sln --no-restore
