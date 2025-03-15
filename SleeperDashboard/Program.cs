@@ -1,13 +1,9 @@
 using SleeperDashboard.Components;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MySql.EntityFrameworkCore.Extensions;
 using SleeperDashboard.Data;
 using SleeperDashboard.Data.Extentions;
 using SleeperDashboard.Helper;
+using SleeperDashboard.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +20,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddLogging();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+
+builder.Services.AddHttpClient("OpenAI", client =>
+{
+    client.BaseAddress = new Uri("https://api.openai.com/");
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["SLEEPER_DB_API_KEY"]}");
+});
+
+builder.Services.AddTransient<IChatGPTClient, ChatGPTClient>();
 
 var app = builder.Build();
 
