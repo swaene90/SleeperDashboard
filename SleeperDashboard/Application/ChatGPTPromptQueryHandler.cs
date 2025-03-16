@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MySqlX.XDevAPI;
 using SleeperDashboard.Client;
 using System.Text.Json;
 
@@ -8,7 +9,7 @@ namespace SleeperDashboard.Application
     {
         private readonly IChatGPTClient _client;
         private readonly ILogger<ChatGPTPromptQueryHandler> _logger;
-        private const string _baseUrl = "v1/chat/completions";
+        private const string _baseUrl = "chat";
 
         public ChatGPTPromptQueryHandler(IChatGPTClient client, ILogger<ChatGPTPromptQueryHandler> logger)
         {
@@ -19,21 +20,14 @@ namespace SleeperDashboard.Application
         public async Task<ChatGPTPromptQueryResponse> Handle(ChatGPTPromptQuery request, CancellationToken cancellationToken)
         {
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _baseUrl);
+            //httpRequestMessage.Headers.Add("Content-Type", "application/json");
+       
             httpRequestMessage.Content = JsonContent.Create(new
             {
-                model = "gpt-4o",
-                messages = new[]
+                data = new
                 {
-                    new
-                    {
-                        role = "system",
-                        content = "You are a fantasy football expert."
-                    },
-                    new
-                    {
-                        role = "user",
-                        content = request.Prompt
-                    }
+                    message = request.Prompt,
+                    temprature = 0.7
                 }
             });
 

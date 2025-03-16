@@ -23,7 +23,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Pr
 
 builder.Services.AddHttpClient("OpenAI", client =>
 {
-    client.BaseAddress = new Uri("https://api.openai.com/");
+    client.BaseAddress = new Uri("https://api.deepseek.com/v1/");
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["SLEEPER_DB_API_KEY"]}");
 });
 
