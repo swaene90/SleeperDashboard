@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using MySqlX.XDevAPI;
-using SleeperDashboard.Client;
+using SleeperDashboard.Client.AI;
 using System.Text.Json;
 
-namespace SleeperDashboard.Application
+namespace SleeperDashboard.Application.AIPrompt
 {
     public class ChatGPTPromptQueryHandler : IRequestHandler<ChatGPTPromptQuery, ChatGPTPromptQueryResponse>
     {
         private readonly IChatGPTClient _client;
         private readonly ILogger<ChatGPTPromptQueryHandler> _logger;
-        private const string _baseUrl = "chat";
+        private const string _baseUrl = "/v1/chat/completions";
 
         public ChatGPTPromptQueryHandler(IChatGPTClient client, ILogger<ChatGPTPromptQueryHandler> logger)
         {
@@ -24,11 +24,21 @@ namespace SleeperDashboard.Application
        
             httpRequestMessage.Content = JsonContent.Create(new
             {
-                data = new
+                model = "deepseek-chat",
+                messages = new List<object>
                 {
-                    message = request.Prompt,
-                    temprature = 0.7
-                }
+                    new
+                    {
+                        role = "system",
+                        content = "You are an expert in fantasy football"
+                    },
+                    new
+                    {
+                        role = "user",
+                        content = request.Prompt
+                    }
+                }.ToArray(),
+                stream = false
             });
 
             var response = await _client.PostAsync(httpRequestMessage);

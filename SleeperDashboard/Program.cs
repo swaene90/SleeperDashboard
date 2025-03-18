@@ -3,7 +3,8 @@ using MySql.EntityFrameworkCore.Extensions;
 using SleeperDashboard.Data;
 using SleeperDashboard.Data.Extentions;
 using SleeperDashboard.Helper;
-using SleeperDashboard.Client;
+using SleeperDashboard.Client.AI;
+using SleeperDashboard.Client.Sleeper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +24,18 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Pr
 
 builder.Services.AddHttpClient("OpenAI", client =>
 {
-    client.BaseAddress = new Uri("https://api.deepseek.com/v1/");
+    client.BaseAddress = new Uri("https://api.deepseek.com");
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["SLEEPER_DB_API_KEY"]}");
 });
 
+builder.Services.AddHttpClient("Sleeper", client =>
+{
+    client.BaseAddress = new Uri("https://api.sleeper.app");
+});
+
+
 builder.Services.AddTransient<IChatGPTClient, ChatGPTClient>();
+builder.Services.AddTransient<ISleeperClient, SleeperClient>();
 
 var app = builder.Build();
 

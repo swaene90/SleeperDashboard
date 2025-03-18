@@ -1,4 +1,4 @@
-﻿namespace SleeperDashboard.Application
+﻿namespace SleeperDashboard.Application.AIPrompt
 {
     public class ChatGPTPromptQueryResponse
     {

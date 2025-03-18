@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SleeperDashboard.Application
+namespace SleeperDashboard.Application.AIPrompt
 {
     public class ChatGPTPromptQuery : IRequest<ChatGPTPromptQueryResponse>
     {

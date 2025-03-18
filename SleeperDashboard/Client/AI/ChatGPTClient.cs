@@ -1,6 +1,6 @@
 ﻿using SleeperDashboard.Helper;
 
-namespace SleeperDashboard.Client
+namespace SleeperDashboard.Client.AI
 {
     public class ChatGPTClient : IChatGPTClient
     {

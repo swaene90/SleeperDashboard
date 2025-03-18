@@ -1,5 +1,4 @@
-﻿
-namespace SleeperDashboard.Client
+﻿namespace SleeperDashboard.Client.AI
 {
     public interface IChatGPTClient
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SleeperDashboard.Application;
+using SleeperDashboard.Application.AIPrompt;
 
 namespace SleeperDashboard.Controller
 {
