@@ -45,7 +45,7 @@ public class PlayerController(
     public async Task<IActionResult> GetPlayers()
     {
         var players = await _mediator.Send(new GetPlayersQuery());
-        return Ok(players.Players.Where(p => p.Value.Status.Contains("Active")).Take(5));
+        return Ok(players.Players.Where(p => p.SearchRank < 25).OrderBy(p => p.SearchRank));
     }
     //    var client = new HttpClient();
     //    var request = new HttpRequestMessage();

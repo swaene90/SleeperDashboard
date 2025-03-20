@@ -1,9 +1,9 @@
-﻿using SleeperDashboard.Dto.Player;
+﻿using SleeperDashboard.Model.Player;
 
 namespace SleeperDashboard.Application.GetPlayers
 {
     public class GetPlayersQueryResponse
     {
-        public Dictionary<string, Player> Players { get; set; }
+        public IEnumerable<Player>? Players { get; set; }
     }
 }
