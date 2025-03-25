@@ -15,12 +15,11 @@ namespace SleeperDashboard.Data
             {
                 new Player
                 {
-                    Id = 3086.ToString(),
                     Hashtag = "#TomBrady-NFL-NE-12",
-                    DepthChartPosition = 1,
+                    //DepthChartPosition = 1,
                     Status = "Active",
                     Sport = "nfl",
-                    FantasyPositions = new List<FantasyPosition> { new() { Position = "QB" } },
+                    //FantasyPositions = new List<FantasyPosition> { new() { Position = "QB" } },
                     Number = 12,
                     SearchLastName = "brady",
                     InjuryStartDate = null,

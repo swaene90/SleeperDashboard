@@ -1,95 +1,95 @@
 ﻿namespace SleeperDashboard.Model.Roster
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-    using System.Text.Json.Serialization;
 
     public class TeamMetadata
     {
-        [JsonPropertyName("record")]
+        [JsonProperty("record")]
         public string Record { get; set; }
 
-        [JsonPropertyName("streak")]
+        [JsonProperty("streak")]
         public string Streak { get; set; }
     }
 
     public class TeamSettings
     {
-        [JsonPropertyName("fpts")]
+        [JsonProperty("fpts")]
         public int Fpts { get; set; }
 
-        [JsonPropertyName("fpts_against")]
+        [JsonProperty("fpts_against")]
         public int FptsAgainst { get; set; }
 
-        [JsonPropertyName("fpts_against_decimal")]
+        [JsonProperty("fpts_against_decimal")]
         public int FptsAgainstDecimal { get; set; }
 
-        [JsonPropertyName("fpts_decimal")]
+        [JsonProperty("fpts_decimal")]
         public int FptsDecimal { get; set; }
 
-        [JsonPropertyName("losses")]
+        [JsonProperty("losses")]
         public int Losses { get; set; }
 
-        [JsonPropertyName("ppts")]
+        [JsonProperty("ppts")]
         public int Ppts { get; set; }
 
-        [JsonPropertyName("ppts_decimal")]
+        [JsonProperty("ppts_decimal")]
         public int PptsDecimal { get; set; }
 
-        [JsonPropertyName("ties")]
+        [JsonProperty("ties")]
         public int Ties { get; set; }
 
-        [JsonPropertyName("total_moves")]
+        [JsonProperty("total_moves")]
         public int TotalMoves { get; set; }
 
-        [JsonPropertyName("waiver_budget_used")]
+        [JsonProperty("waiver_budget_used")]
         public int WaiverBudgetUsed { get; set; }
 
-        [JsonPropertyName("waiver_position")]
+        [JsonProperty("waiver_position")]
         public int WaiverPosition { get; set; }
 
-        [JsonPropertyName("wins")]
+        [JsonProperty("wins")]
         public int Wins { get; set; }
     }
 
     public class Roster
     {
-        [JsonPropertyName("co_owners")]
+        [JsonProperty("co_owners")]
         public object CoOwners { get; set; }  // Nullable field
 
-        [JsonPropertyName("keepers")]
+        [JsonProperty("keepers")]
         public object Keepers { get; set; }   // Nullable field
 
-        [JsonPropertyName("league_id")]
+        [JsonProperty("league_id")]
         public string LeagueId { get; set; }
 
-        [JsonPropertyName("metadata")]
+        [JsonProperty("metadata")]
         public TeamMetadata Metadata { get; set; }
 
-        [JsonPropertyName("owner_id")]
+        [JsonProperty("owner_id")]
         public string OwnerId { get; set; }
 
-        [JsonPropertyName("player_map")]
+        [JsonProperty("player_map")]
         public object PlayerMap { get; set; } // Nullable field
 
-        [JsonPropertyName("players")]
+        [JsonProperty("players")]
         public List<string> Players
         {
             get; set;
         }
 
-        [JsonPropertyName("reserve")]
+        [JsonProperty("reserve")]
         public List<string> Reserve { get; set; }
 
-        [JsonPropertyName("roster_id")]
+        [JsonProperty("roster_id")]
         public int RosterId { get; set; }
 
-        [JsonPropertyName("settings")]
+        [JsonProperty("settings")]
         public TeamSettings Settings { get; set; }
 
-        [JsonPropertyName("starters")]
+        [JsonProperty("starters")]
         public List<string> Starters { get; set; }
 
-        [JsonPropertyName("taxi")]
+        [JsonProperty("taxi")]
         public object Taxi { get; set; }
     }
 }

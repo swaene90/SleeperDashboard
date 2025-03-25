@@ -9,18 +9,18 @@ namespace SleeperDashboard.Data.Entity
     public class Player
     {
         [Key]
-        public string Id { get; set; } = null!;
+        public int Id;
 
         [MaxLength(255)]
         public string? Hashtag { get; set; }
-        public int DepthChartPosition { get; set; }
+        public string? DepthChartPosition { get; set; }
         
         [MaxLength(255)]
         public string? Status { get; set; }
         
         [MaxLength(255)]
         public string? Sport { get; set; }
-        public List<FantasyPosition>? FantasyPositions { get; set; }
+        public string? FantasyPositions { get; set; }
         public int Number { get; set; }
         
         [MaxLength(255)]

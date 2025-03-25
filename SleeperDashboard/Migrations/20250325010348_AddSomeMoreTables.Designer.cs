@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SleeperDashboard.Data;
 
@@ -10,9 +11,11 @@ using SleeperDashboard.Data;
 namespace SleeperDashboard.Migrations
 {
     [DbContext(typeof(SleeperDbContext))]
-    partial class SleeperDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250325010348_AddSomeMoreTables")]
+    partial class AddSomeMoreTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
