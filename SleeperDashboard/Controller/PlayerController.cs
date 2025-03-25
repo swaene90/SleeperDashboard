@@ -11,16 +11,9 @@ namespace SleeperDashboard.Controller;
 
 [ApiController]
 [Route("[controller]")]
-public class PlayerController(
-    ILogger<PlayerController> logger,
-    IMediator mediator,
-    SleeperDbContext context) : ControllerBase
+public class PlayerController(IMediator mediator) : ControllerBase
 {
-    private readonly ILogger<PlayerController> _logger = logger;
     private readonly IMediator _mediator = mediator;
-    private readonly SleeperDbContext _context = context;
-
-    private const string Id = "190215971114461472";
 
     [HttpGet]
     [Route("trending")]

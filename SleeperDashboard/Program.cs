@@ -37,6 +37,8 @@ builder.Services.AddHttpClient("Sleeper", client =>
 builder.Services.AddTransient<IChatGPTClient, ChatGPTClient>();
 builder.Services.AddTransient<ISleeperClient, SleeperClient>();
 
+builder.Services.AddSingleton(new LeagueInfo() { Id = builder.Configuration["LeagueId"] });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
