@@ -40,7 +40,11 @@ namespace SleeperDashboard.Data.Extentions
                     }
 
                     //await InitializeSeedData.Initialize(context);
-                    _logger.LogInformation("Database seeded for: {name}", nameof(SleeperDbContext));
+                    //_logger.LogInformation("Database seeded for: {name}", nameof(SleeperDbContext));
+
+                    //_logger.LogInformation("Database already exists for: {name}, starting migration", nameof(SleeperDbContext));
+                    //await context.Database.MigrateAsync();
+                    //_logger.LogInformation("Database migration complete for: {name}", nameof(SleeperDbContext));
                 }
             }
             catch (Exception e)

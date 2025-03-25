@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using SleeperDashboard.Application.GetPlayers;
 using SleeperDashboard.Data;
 using SleeperDashboard.Dto.Player;
+using SleeperDashboard.Model.Player;
+using Player = SleeperDashboard.Model.Player.Player;
 
 namespace SleeperDashboard.Controller;
 
@@ -35,10 +37,11 @@ public class PlayerController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Route("player")]
+    [ProducesResponseType(typeof(Player), 200)]
     public async Task<IActionResult> GetPlayers()
     {
         var players = await _mediator.Send(new GetPlayersQuery());
-        return Ok(players.Players.Where(p => p.SearchRank < 25).OrderBy(p => p.SearchRank));
+        return Ok(players.Players.Where(p => p.Status == "Active").OrderBy(p => p.SearchRank));
     }
     //    var client = new HttpClient();
     //    var request = new HttpRequestMessage();

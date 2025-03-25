@@ -7,7 +7,7 @@ namespace SleeperDashboard.Model.Player
         public string? Id { get; set; }
 
         [JsonProperty("practice_participation")]
-        public bool? PracticeParticipation { get; set; }
+        public string? PracticeParticipation { get; set; }
 
         [JsonProperty("team")]
         public string? Team { get; set; }

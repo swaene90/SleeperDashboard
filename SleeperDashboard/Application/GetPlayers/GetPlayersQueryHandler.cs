@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SleeperDashboard.Client.Sleeper;
@@ -14,6 +15,7 @@ namespace SleeperDashboard.Application.GetPlayers
         private readonly ISleeperClient _sleeperClient;
         private readonly SleeperDbContext _dbContext;
         private readonly IMediator _mediator;
+        private readonly IMemoryCache _memoryCache;
 
         private JsonSerializerSettings _jsonSerializerSettings => new JsonSerializerSettings
         {
@@ -24,16 +26,26 @@ namespace SleeperDashboard.Application.GetPlayers
             }
         };
 
-        public GetPlayersQueryHandler(ISleeperClient sleeperClient, SleeperDbContext dbContext, IMediator mediator)
+        public GetPlayersQueryHandler(ISleeperClient sleeperClient, SleeperDbContext dbContext, IMediator mediator, IMemoryCache memoryCache)
         {
             _sleeperClient = sleeperClient;
             _dbContext = dbContext;
             _mediator = mediator;
+            _memoryCache = memoryCache;
         }
 
         public async Task<GetPlayersQueryResponse> Handle(GetPlayersQuery request, CancellationToken cancellationToken)
         {
             var queryResult = new GetPlayersQueryResponse();
+
+            if (_memoryCache.TryGetValue("Players", out IEnumerable<Player>? cacheValue))
+            {
+                if (cacheValue != null)
+                {
+                    queryResult.Players = cacheValue;
+                    return queryResult;
+                }
+            }
 
             if (!await _mediator.Send(new CheckPlayerCacheQuery()))
             {
@@ -72,6 +84,10 @@ namespace SleeperDashboard.Application.GetPlayers
                     await _dbContext.SaveChangesAsync(cancellationToken);
 
                     queryResult.Players = players;
+                    _memoryCache.Set("Players", players, new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7)
+                    });
                 }
                 else
                 {
@@ -81,6 +97,10 @@ namespace SleeperDashboard.Application.GetPlayers
             else
             {
                 queryResult.Players = await _dbContext.Players.Select(p => p.ToModel()).ToListAsync(cancellationToken: cancellationToken);
+                _memoryCache.Set("Players", queryResult.Players, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7)
+                });
             }
 
             return queryResult;

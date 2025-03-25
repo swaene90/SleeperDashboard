@@ -16,6 +16,7 @@ builder.Services.AddMySQLServer<SleeperDbContext>(builder.Configuration.GetConne
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMemoryCache();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddLogging();

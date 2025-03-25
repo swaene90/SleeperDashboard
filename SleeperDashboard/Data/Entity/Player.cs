@@ -32,7 +32,7 @@ namespace SleeperDashboard.Data.Entity
         
         [MaxLength(255)]
         public string? Position { get; set; }
-        public bool? PracticeParticipation { get; set; }
+        public string? PracticeParticipation { get; set; }
         
         [MaxLength(255)]
         public string? SportradarId { get; set; }
