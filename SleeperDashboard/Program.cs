@@ -1,4 +1,7 @@
 using SleeperDashboard.Components;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 using MySql.EntityFrameworkCore.Extensions;
 using SleeperDashboard.Data;
 using SleeperDashboard.Data.Extentions;
@@ -39,6 +42,15 @@ builder.Services.AddTransient<IChatGPTClient, ChatGPTClient>();
 builder.Services.AddTransient<ISleeperClient, SleeperClient>();
 
 builder.Services.AddSingleton(new LeagueInfo() { Id = builder.Configuration["LeagueId"] });
+builder.Services.AddSingleton<IChatCompletionService>(sp =>
+{
+#pragma warning disable SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    return new OpenAIChatCompletionService(
+        "deepseek-chat",
+        new Uri("https://api.deepseek.com"),
+        builder.Configuration["SLEEPER_DB_API_KEY"]);
+#pragma warning restore SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+});
 
 var app = builder.Build();
 
@@ -51,11 +63,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sleeper V1");
-        options.RoutePrefix = string.Empty; // Swagger at the root URL
-    });
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sleeper V1");
+    options.RoutePrefix = string.Empty; // Swagger at the root URL
+});
 
 app.UseHttpsRedirection();
 
