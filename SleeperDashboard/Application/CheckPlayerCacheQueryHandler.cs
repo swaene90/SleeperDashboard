@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SleeperDashboard.Data;
 using SleeperDashboard.Data.Entity;
 
@@ -17,7 +18,7 @@ namespace SleeperDashboard.Application
         {
             var isCached = false;
 
-            int? daysToCache = int.TryParse(_dbContext.Configurations.FirstOrDefault(c => c.Name == "DaysToCache")?.Value, out var result) ? result : null;
+            int? daysToCache = int.TryParse((await _dbContext.Configurations.FirstOrDefaultAsync(c => c.Name == "DaysToCache"))?.Value, out var result) ? result : null;
 
             if (daysToCache == null)
             {

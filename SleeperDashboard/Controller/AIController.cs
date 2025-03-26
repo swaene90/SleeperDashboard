@@ -13,12 +13,12 @@ namespace SleeperDashboard.Controller
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("query")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetQuery(string prompt)
+        public async Task<IActionResult> GetQuery(int userId, string prompt)
         {
-            return Ok(await _mediator.Send(new ChatGPTPromptQuery() { Prompt = prompt }));
+            return Ok(await _mediator.Send(new ChatGPTPromptQuery(userId, prompt)));
         }
     }
 }

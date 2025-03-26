@@ -4,6 +4,13 @@ namespace SleeperDashboard.Application.AIPrompt
 {
     public class ChatGPTPromptQuery : IRequest<ChatGPTPromptQueryResponse>
     {
-        public string? Prompt { get; set; }
+        public int UserId { get; }
+        public string Prompt { get; }
+
+        public ChatGPTPromptQuery(int userId, string prompt)
+        {
+            UserId = userId;
+            Prompt = prompt;
+        }
     }
 }

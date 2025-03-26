@@ -37,9 +37,24 @@ builder.Services.AddHttpClient("Sleeper", client =>
     client.BaseAddress = new Uri("https://api.sleeper.app");
 });
 
+// Create a kernel with Azure OpenAI chat completion
+var kernelBuilder = Kernel.CreateBuilder().AddOpenAIChatCompletion(
+    "deepseek-chat",
+    "https://api.deepseek.com",
+    builder.Configuration["SLEEPER_DB_API_KEY"]);
+
+// Add enterprise components
+builder.Services.AddLogging(services => services.AddConsole().SetMinimumLevel(LogLevel.Trace));
+
+// Build the kernel
+Kernel kernel = kernelBuilder.Build();
+
+// Add the kernel to the service collection
+builder.Services.AddSingleton(kernel);
 
 builder.Services.AddTransient<IChatGPTClient, ChatGPTClient>();
 builder.Services.AddTransient<ISleeperClient, SleeperClient>();
+
 
 builder.Services.AddSingleton(new LeagueInfo() { Id = builder.Configuration["LeagueId"] });
 builder.Services.AddSingleton<IChatCompletionService>(sp =>
