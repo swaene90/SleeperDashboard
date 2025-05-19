@@ -1,7 +1,0 @@
-langchain 
-wikipedia 
-langchain-community 
-langchain-deepseek
-python-dotenv
-pydantic
-duckduckgo-search
