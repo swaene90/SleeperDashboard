@@ -11,6 +11,16 @@ using SleeperDashboard.Client.Sleeper;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var certPassword = Environment.GetEnvironmentVariable("HTTPS_CERT_PASSWORD");
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8080); // HTTP
+    options.ListenAnyIP(8081, listenOptions =>
+    {
+        listenOptions.UseHttps("/https/aspnetapp.pfx", certPassword);
+    });
+});
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
